@@ -57,7 +57,8 @@ const deleteIncident = (req, res) => {
   const incidentId = req.params.id;
 };
 
-const displayNotFoundPage = (req, res) => res.render("not-found");
+const displayNotFoundPage = (req, res) =>
+  res.render("not-found", { title: "404" });
 
 module.exports = {
   displayLandingPage,

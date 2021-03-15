@@ -17,4 +17,6 @@ router
 
 router.get(controller.deleteIncident);
 
+router.get("*", controller.displayNotFoundPage);
+
 module.exports = router;
