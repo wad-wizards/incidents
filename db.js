@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const URI =
-  "mongodb+srv://wizards:vXFGCcIiX0mO1uEN@cluster0.j56m0.mongodb.net/midterm?retryWrites=true&w=majority";
+  "mongodb+srv://wizards:vXFGCcIiX0mO1uEN@cluster0.j56m0.mongodb.net/wizards-incidents?retryWrites=true&w=majority";
 
 module.exports = {
   async connect() {
