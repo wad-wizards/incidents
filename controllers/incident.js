@@ -55,6 +55,21 @@ const updateIncident = (req, res) => {
 */
 const deleteIncident = (req, res) => {
   const incidentId = req.params.id;
+
+
+  Incident.remove({_id:id}, (err)=>{
+    if(err)
+    {
+      console.log(err);
+      res.redirect('/not-found');
+    }
+    else
+    {
+      //router.get('delete/:id', deleteIncident);
+      res.redirect('incident-list');
+    }
+
+  });
 };
 
 const displayNotFoundPage = (req, res) =>
