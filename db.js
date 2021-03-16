@@ -16,4 +16,7 @@ module.exports = {
       process.exit(1);
     }
   },
+  async closeConnection() {
+    await mongoose.connection.close();
+  },
 };
