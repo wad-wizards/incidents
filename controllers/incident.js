@@ -53,23 +53,14 @@ const updateIncident = (req, res) => {
   - If exists, delete incident from db
   - If not, redirect to /not-found
 */
-const deleteIncident = (req, res) => {
+const deleteIncident = async (req, res) => {
   const incidentId = req.params.id;
+  const doesIncidentExist = await Incident.exists({ _id: incidentId });
 
+  if (!doesIncidentExist) return res.redirect("/not-found");
 
-  Incident.remove({_id:id}, (err)=>{
-    if(err)
-    {
-      console.log(err);
-      res.redirect('/not-found');
-    }
-    else
-    {
-      //router.get('delete/:id', deleteIncident);
-      res.redirect('incident-list');
-    }
-
-  });
+  await Incident.deleteOne({ _id: incidentId });
+  return res.redirect("/");
 };
 
 const displayNotFoundPage = (req, res) =>
