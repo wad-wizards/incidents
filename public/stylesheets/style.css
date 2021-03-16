@@ -1,8 +1,11 @@
 body {
-  padding: 50px;
   font: 16px "Roboto Slab", serif;
 }
 
 h1 {
   font-family: "Fraunces", serif;
+}
+
+footer {
+  margin-top: 100px;
 }
