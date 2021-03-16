@@ -15,7 +15,7 @@ router
   .get(controller.displayUpdateIncidentPage)
   .post(controller.updateIncident);
 
-router.get(controller.deleteIncident);
+router.get("/incidents/:id/delete", controller.deleteIncident);
 
 router.get("*", controller.displayNotFoundPage);
 
