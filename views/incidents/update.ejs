@@ -3,14 +3,16 @@
         <fieldset class="form-group">           
             <legend style="text-align: right; font-size: 25px;">Update Incident</legend>
             <label for="title">Title: </label>
-            <textarea name="title" 
+            <textarea 
+                name="title" 
                 value = "<%= Incident.title %>" 
                 style="max-height: 50px"
                 required >
             </textarea>
 
             <label for="description" style="padding-top: 25px"> Description:</label>
-            <textarea name="description" 
+            <textarea 
+                name="description" 
                 value = "<%= Incident.title %>" 
                 required>
             </textarea>
@@ -22,7 +24,8 @@
                     <option value="HIGH">High</option>
                 </select>
 
-            <button type="submit">Save Incident</button>
+            <button type="submit">Update Incident</button>
+        
         </fieldset>
     </form>
 </main>
