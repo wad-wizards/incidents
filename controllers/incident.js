@@ -13,7 +13,9 @@ const displayLandingPage = (req, res) => {
 "Create Incident" Page: 
 - Render create incident view
 */
-const displayCreateIncidentPage = (req, res) => {};
+const displayCreateIncidentPage = (req, res) => {
+  res.render("incidents/create", { title: "Create Incident" });
+};
 
 /*
 "Create Incident" Handler: 
@@ -22,6 +24,20 @@ const displayCreateIncidentPage = (req, res) => {};
 */
 const createIncident = (req, res) => {
   const formData = req.body;
+  let newIncident = Incident({
+    title: formData.title,
+    description: formData.description,
+    priority: formData.priority,
+  });
+
+  Incident.create(newIncident, (err, Incident) => {
+    if (err) {
+      console.log(err);
+      res.end(err);
+    } else {
+      res.redirect("/");
+    }
+  });
 };
 
 /*

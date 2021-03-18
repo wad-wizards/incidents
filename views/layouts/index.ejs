@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,600&family=Roboto+Slab&display=swap" rel="stylesheet">  <link rel='stylesheet' href='/stylesheets/style.css' />
-  <title><%=title%></title>
+  <title><%= (typeof title != "undefined" ? title : "") %>
+  </title>
 </head>
 <body>
   <h1>Incident Management Application</h1>
