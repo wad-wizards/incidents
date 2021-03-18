@@ -6,16 +6,4 @@
   </button>
 </a>
 
-<table> 
-  <% for(let count = 0; count < Incident.length; count++){ %>
-    <tr class="d-flex">
-        <% if(typeof displayName == 'string' && displayName) { %>
-            <td><%= Incident[count].title %></td>
-            <td><%= Incident[count].description %></td>
-            <a href="/views/update/<%= Incident[count]._id %>" class="btn btn-primary btn-sm">
-            <i class="fas fa-pencil-alt"></i>Edit</a>
-        </td>
-    </tr>
-</table>
-
 </main>
