@@ -50,12 +50,12 @@ const createIncident = (req, res) => {
 const displayUpdateIncidentPage = (req, res) => {
   const incidentId = req.params.id;
 
-  Incident.findById(incidentID, (err, incidentToUpdate) => {
+  Incident.findById(incidentId, (err, incidentToUpdate) => {
     if (err) {
       console.log(err);
       res.end(err);
     } else {
-      res.render("incident/update", {
+      res.render("incidents/update", {
         title: "Update Incident",
         Incident: incidentToUpdate,
       });
@@ -73,15 +73,14 @@ const displayUpdateIncidentPage = (req, res) => {
 const updateIncident = (req, res) => {
   const incidentId = req.params.id;
   const formData = req.body;
-
   let updatedIncident = Incident({
-    _id: id,
+    _id: incidentId,
     title: formData.title,
     description: formData.description,
     priority: formData.priority,
   });
 
-  Incident.updateOne({ _id: id }, updatedIncident, (err) => {
+  Incident.updateOne({ _id: incidentId }, updatedIncident, (err) => {
     if (err) {
       console.log(err);
       res.end(err);

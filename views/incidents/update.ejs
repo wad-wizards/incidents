@@ -4,24 +4,17 @@
             <legend style="text-align: right; font-size: 25px;">Update Incident</legend>
             <label for="title">Title: </label>
             <textarea 
-                name="title" 
-                value = "<%= Incident.title %>" 
-                style="max-height: 50px"
-                required >
-            </textarea>
+                name="title"
+                style="max-height: 50px" required><%=Incident.title%></textarea>
 
             <label for="description" style="padding-top: 25px"> Description:</label>
-            <textarea 
-                name="description" 
-                value = "<%= Incident.title %>" 
-                required>
-            </textarea>
+            <textarea name="description" required><%=Incident.description%></textarea>
 
             <label for="priority" style="padding-top: 25px">Priority</label>
                 <select name="priority" value = "<%= Incident.priority %>" style="margin-bottom: 25px">
-                    <option value="LOW">Low</option>
-                    <option value="MEDIUM">Medium</option>
-                    <option value="HIGH">High</option>
+                    <option value="LOW" <%= Incident.priority === "LOW" ? "selected" : "" %>>Low</option>
+                    <option value="MEDIUM" <%= Incident.priority === "MEDIUM" ? "selected" : "" %>>Medium</option>
+                    <option value="HIGH" <%= Incident.priority === "HIGH" ? "selected" : "" %>>High</option>
                 </select>
 
             <button type="submit">Update Incident</button>
