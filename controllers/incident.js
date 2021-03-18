@@ -49,6 +49,18 @@ const createIncident = (req, res) => {
 */
 const displayUpdateIncidentPage = (req, res) => {
   const incidentId = req.params.id;
+
+  Incident.findById(incidentID, (err, incidentToUpdate) => {
+    if (err) {
+      console.log(err);
+      res.end(err);
+    } else {
+      res.render("incident/update", {
+        title: "Update Incident",
+        Incident: incidentToUpdate,
+      });
+    }
+  });
 };
 
 /*
@@ -61,6 +73,23 @@ const displayUpdateIncidentPage = (req, res) => {
 const updateIncident = (req, res) => {
   const incidentId = req.params.id;
   const formData = req.body;
+
+  let updatedIncident = Incident({
+    _id: id,
+    title: formData.title,
+    description: formData.description,
+    priority: formData.priority,
+  });
+
+  Incident.updateOne({ _id: id }, updatedIncident, (err) => {
+    if (err) {
+      console.log(err);
+      res.end(err);
+    } else {
+      //refresh the contacts list
+      res.redirect("/");
+    }
+  });
 };
 
 /*
