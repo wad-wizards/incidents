@@ -7,13 +7,8 @@ Landing Page:
 */
 const displayLandingPage = async (req, res) => {
   const incidentsData = await Incident.find({});
-
-  if (!incidentsData) return res.redirect("/not-found");
-
-  res.render("index", { title: "All Incidents", incidentsData: incidentsData });
+  res.render("index", { title: "Incidents", incidentsData: incidentsData });
 };
-
-
 
 /*
 "Create Incident" Page: 
