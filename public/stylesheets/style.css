@@ -1,9 +1,22 @@
-body {
-  font: 16px "Roboto Slab", serif;
+* {
+  font-family: "Roboto Slab", serif;
 }
 
-h1 {
+body > header {
+  display: flex;
+  margin-bottom: 50px;
+  align-items: flex-end;
+}
+
+.logo {
+  height: 280px;
+  filter: saturate(1.5);
+}
+
+.brand-name {
   font-family: "Fraunces", serif;
+  font-size: 28px;
+  margin-bottom: 50px;
 }
 
 body > footer {
