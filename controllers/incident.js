@@ -5,9 +5,15 @@ Landing Page:
 - Render index view
 - Pass array containing all incidents on db into view 
 */
-const displayLandingPage = (req, res) => {
-  res.render("index", { title: "Express" });
+const displayLandingPage = async (req, res) => {
+  const incidentsData = await Incident.find({});
+
+  if (!incidentsData) return res.redirect("/not-found");
+
+  res.render("index", { title: "All Incidents", incidentsData: incidentsData });
 };
+
+
 
 /*
 "Create Incident" Page: 

@@ -9,3 +9,7 @@ h1 {
 body > footer {
   margin-top: 100px;
 }
+
+.all-incidents-table-override {
+  width: auto;
+}

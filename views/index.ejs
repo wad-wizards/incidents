@@ -1,9 +1,42 @@
-<main>
+<!-- Main Content -->
+<main class="container" style="margin-top:25px">
+  <div class="row">
+      <div class="offset-md-1 col-md-11">
+          <h2><%= title %></h2>
+          <a href="incidents/new" style="text-align: end; width: 100%; display: block;">
+            <button style="width: 210px; border-radius: 16px; font-size: 20px; text-align: right;"> 
+              Create Incident
+            </button>
+          </a>
+          
+          <br>
+          <table class="table table-bordered table-striped table-hover all-incidents-table-override">
+              <!-- Header Row-->
+              <tr class="d-flex">
+                  <th class="text-center col-2">Title</th>
+                  <th class="text-center col-2">Description</th>
+                  <th class="text-center col-1">Priority</th>
+                  <th class="text-center col-1"></th>
+                  <th class="text-center col-1"></th>
+              </tr>
 
-<a href="incidents/new">
-  <button style="width: 100%;  border-radius: 16px; font-size: 25px;"> 
-    Create Incident
-  </button>
-</a>
-
+              <!-- Repeatable Template Row -->
+              <% for(let count = 0; count < incidentsData.length; count++) { %>
+                  <tr class="d-flex">
+                      <td class="text-center col-2"><%= incidentsData[count].title %></td>
+                      <td class="text-center col-2"><%= incidentsData[count].description %></td>
+                      <td class="text-center col-1"><%= incidentsData[count].priority %></td>
+                      <td class="text-center col-1">
+                          <a href="/incidents/<%= incidentsData[count]._id %>/edit" class="btn btn-primary btn-sm">
+                          <i class="fas fa-pencil-alt"></i> Edit</a>
+                      </td>
+                      <td class="text-center col-1">
+                          <a href="/incidents/<%= incidentsData[count]._id %>/delete" class="btn btn-danger btn-sm">
+                          <i class="fas fa-trash-alt"></i> Delete</a>
+                      </td>
+                  </tr>
+              <% } %>
+          </table>
+      </div>
+  </div>
 </main>
