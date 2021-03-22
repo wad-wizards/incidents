@@ -5,7 +5,14 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const expressLayouts = require("express-ejs-layouts");
 const db = require("./db");
-const router = require("./router");
+const router = require("./routers");
+
+//Authentication Modules
+let session = require("express-session");
+let passport = require("passport");
+let passportLocal = require("passport-local");
+let localStrategy = passportLocal.Strategy;
+let flash = require("connect-flash");
 
 db.connect();
 
@@ -24,6 +31,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+//express Session setup
+app.use(
+  session({
+    secret: "SomeSecret",
+    saveUninitialized: false,
+    resave: false,
+  })
+);
+
+// Initialize flash
+app.use(flash());
+
+//Initialize passport
+app.use(passport.initialize());
+app.use(passporrt.session());
+
+//passport user configuration
+
+//crate a user model instance
+let userModel = require("../incidents-2/models/user.model");
+let User = userModel.schema;
+
+//serialize and deserialize the user info
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use(router);
 

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const constants = require("../constants");
 
 const schema = new mongoose.Schema(
   {
@@ -12,7 +13,7 @@ const schema = new mongoose.Schema(
     },
     priority: {
       type: String,
-      enum: ["LOW", "MEDIUM", "HIGH"],
+      enum: constants.incidentPriorities,
       required: true,
     },
   },

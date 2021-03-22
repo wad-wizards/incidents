@@ -1,0 +1,28 @@
+<main>
+    <h1>Login</h1>
+    <% if (locals.errors) { %>
+      <div class="form-errors">
+        <span class="title">Failed to Login:</span>
+        <ul>
+          <% for (const error of errors) { %>
+            <li><%=error%></li>
+          <% } %>
+        </ul>
+      </div>  
+    <% } %>
+    <form method="POST">
+      <label>Username</label>
+      <input name="username" required />
+  
+      <label>Password</label>
+      <input name="password" type="password" id="password" required />
+  
+      <fieldset class="form-group text-right">
+        <input type="submit" class="btn btn-success" value="Login">
+        <a href="/">
+        <input type="button" class="btn btn-warning"value="Cancel">
+        </a>
+      </fieldset>
+    </form>
+    
+</main>

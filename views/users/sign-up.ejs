@@ -1,0 +1,32 @@
+<main>
+  <h1>Sign Up</h1>
+  <% if (locals.errors) { %>
+    <div class="form-errors">
+      <span class="title">Failed to sign up:</span>
+      <ul>
+        <% for (const error of errors) { %>
+          <li><%=error%></li>
+        <% } %>
+      </ul>
+    </div>  
+  <% } %>
+  <form method="POST">
+    <label>Username</label>
+    <input name="username" required />
+
+    <label>Email Address</label>
+    <input name="email" type="email"  />
+
+    <label>Type</label>
+    <select name="type" required>
+      <% for (const type of userTypes) { %>
+        <option value="<%=type%>"><%=type%></option>  
+      <% } %>
+    </select>
+
+    <label>Password</label>
+    <input name="password" type="password" minlength="6" required />
+
+    <button type="submit">Submit</button>
+  </form>
+</main>
