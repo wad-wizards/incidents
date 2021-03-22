@@ -46,12 +46,12 @@ app.use(flash());
 
 //Initialize passport
 app.use(passport.initialize());
-app.use(passporrt.session());
+app.use(passport.session());
 
 //passport user configuration
 
 //crate a user model instance
-let userModel = require("../incidents-2/models/user.model");
+let userModel = require("../incidents/models/user.model");
 let User = userModel.schema;
 
 //serialize and deserialize the user info
