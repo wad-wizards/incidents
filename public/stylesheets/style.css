@@ -22,3 +22,12 @@ body > header {
 body > footer {
   margin-top: 100px;
 }
+
+.form-errors {
+  color: red;
+  margin: 20px 0;
+}
+
+.form-errors > .title {
+  font-weight: bold;
+}
