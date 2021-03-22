@@ -1,9 +1,7 @@
 const express = require("express");
-const controller = require("./controllers/incident");
+const controller = require("../controllers/incident.controller");
 
 const router = express.Router();
-
-router.get("/", controller.displayLandingPage);
 
 router
   .route("/incidents/new")
@@ -16,7 +14,5 @@ router
   .post(controller.updateIncident);
 
 router.get("/incidents/:id/delete", controller.deleteIncident);
-
-router.get("*", controller.displayNotFoundPage);
 
 module.exports = router;
