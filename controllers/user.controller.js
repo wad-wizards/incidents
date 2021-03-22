@@ -1,3 +1,4 @@
+const passport = require("passport");
 const User = require("../models/user.model");
 const helpers = require("./helpers");
 
@@ -16,11 +17,38 @@ const signUp = async (req, res) => {
   }
 };
 
-const displayLoginPage = (req, res) => {
-  res.render("users/login", { title: "Login" });
+const displayLoginPage = (req, res, next) => {
+  //Check if user is logged in
+  if (!req.user) {
+    res.render("users/login", {
+      title: "Login",
+      messages: req.flash("loginMessage"),
+    });
+  } else {
+    return res.redirect("/");
+  }
 };
 
-const login = (req, res) => {};
+const login = (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    //server error
+    if (err) {
+      return next(err);
+    }
+    //is there a user login error
+    if (!user) {
+      req.flash("loginMessage", "Authentication Error");
+      return res.redirect("/login");
+    }
+    req.login(user, (err) => {
+      //server error
+      if (err) {
+        return next(err);
+      }
+      return res.redirect("/incidents");
+    });
+  })(req, res, next);
+};
 
 const displayEditProfilePage = (req, res) => {
   res.render("users/edit-profile", { title: "Edit Profile" });
