@@ -8,8 +8,9 @@ const displaySignUpPage = (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-    await User.create(req.body);
-    res.redirect("/users/login");
+    const { password, ...payload } = req.body;
+    await User.register(payload, password);
+    res.redirect("/login");
   } catch (error) {
     helpers.signUp.renderSignUpView(res, {
       errors: helpers.signUp.getSignUpErrorMessages(error),
@@ -18,37 +19,17 @@ const signUp = async (req, res) => {
 };
 
 const displayLoginPage = (req, res, next) => {
-  //Check if user is logged in
-  if (!req.user) {
-    res.render("users/login", {
-      title: "Login",
-      messages: req.flash("loginMessage"),
-    });
-  } else {
-    return res.redirect("/");
-  }
+  res.render("users/login", {
+    title: "Login",
+    errors: req.flash("error"),
+  });
 };
 
-const login = (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    //server error
-    if (err) {
-      return next(err);
-    }
-    //is there a user login error
-    if (!user) {
-      req.flash("loginMessage", "Authentication Error");
-      return res.redirect("/login");
-    }
-    req.login(user, (err) => {
-      //server error
-      if (err) {
-        return next(err);
-      }
-      return res.redirect("/incidents");
-    });
-  })(req, res, next);
-};
+const login = passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/users/login",
+  failureFlash: true,
+});
 
 const displayEditProfilePage = (req, res) => {
   res.render("users/edit-profile", { title: "Edit Profile" });
