@@ -14,22 +14,20 @@ const ensureLoggedIn = (req, res, next) => {
 };
 
 router
-  .use(ensureNotLoggedIn)
   .route("/users/sign-up")
-  .get(controller.displaySignUpPage)
-  .post(controller.signUp);
+  .get(ensureNotLoggedIn, controller.displaySignUpPage)
+  .post(ensureNotLoggedIn, controller.signUp);
 
 router
-  .use(ensureNotLoggedIn)
   .route("/users/login")
-  .subscribe(ensureNotLoggedIn)
-  .get(controller.displayLoginPage)
-  .post(controller.login);
+  .get(ensureNotLoggedIn, controller.displayLoginPage)
+  .post(ensureNotLoggedIn, controller.login);
 
 router
-  .use(ensureLoggedIn)
   .route("/users/edit-profile")
-  .get(controller.displayEditProfilePage)
-  .post(controller.editProfile);
+  .get(ensureLoggedIn, controller.displayEditProfilePage)
+  .post(ensureLoggedIn, controller.editProfile);
+
+router.get("/users/logout", ensureLoggedIn, controller.logout);
 
 module.exports = router;

@@ -31,6 +31,11 @@ const login = passport.authenticate("local", {
   failureFlash: true,
 });
 
+const logout = (req, res) => {
+  req.logout();
+  res.redirect("/");
+};
+
 const displayEditProfilePage = (req, res) => {
   res.render("users/edit-profile", { title: "Edit Profile" });
 };
@@ -42,6 +47,7 @@ module.exports = {
   signUp,
   displayLoginPage,
   login,
+  logout,
   displayEditProfilePage,
   editProfile,
 };
