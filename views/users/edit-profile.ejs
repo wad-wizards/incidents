@@ -1,0 +1,34 @@
+<main>
+    <h1>Edit Profile</h1>
+    <% if (locals.errors) { %>
+      <div class="form-errors">
+        <span class="title">Failed to Update profile information:</span>
+        <ul>
+          <% for (const error of errors) { %>
+            <li><%=error%></li>
+          <% } %>
+        </ul>
+      </div>  
+    <% } %>
+    <form method="POST">
+      <label>Username</label>
+      <input name="username" value="<%=username%>"/>
+  
+      <label>Email Address</label>
+      <input name="email" type="email" value="<%=email%>"/>
+  
+      <label>Type</label>
+      <select name="type" required>
+        <% for (const userType of userTypes) { 
+            var selected = (type==userType) ? "selected" : "";
+            %>
+          <option value="<%=userType%>" <%=selected %>><%=userType%></option>  
+        <% } %>
+      </select>
+  
+      <label>Password</label>
+      <input name="password" type="password" minlength="6" value="<%=password%>" required />
+  
+      <button type="submit">Edit</button>
+    </form>
+  </main>
