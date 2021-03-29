@@ -13,12 +13,12 @@ const signUp = async (req, res) => {
     res.redirect("/users/login");
   } catch (error) {
     helpers.signUp.renderSignUpView(res, {
-      errors: helpers.signUp.getSignUpErrorMessages(error),
+      errors: helpers.getUserFormErrorMessage(error),
     });
   }
 };
 
-const displayLoginPage = (req, res, next) => {
+const displayLoginPage = (req, res) => {
   res.render("users/login", {
     title: "Login",
     errors: req.flash("error"),
@@ -37,41 +37,32 @@ const logout = (req, res) => {
 };
 
 const displayEditProfilePage = (req, res) => {
-  const { _id, username, email, type } = req.user;
-  helpers.editProfile.renderEditProfileView(res, { ...req.user });
+  helpers.editProfile.renderEditProfileView(res, { user: req.user });
 };
 
 const editProfile = async (req, res) => {
-  try{
-    const formData = req.body;
-    let userId = req.user._id;
-    let updatedUserModel = {
-      username: formData.username,
-      email: formData.email,
-      type: formData.type,
-      password: formData.password
-    };
-    
-    let updatedUser = await User.findOneAndUpdate({ _id: userId }, updatedUserModel);
-    
-    if(updatedUser) {
-      User.findByUsername(formData.username).then(function(sanitizedUser) {
-        if(sanitizedUser) {
-          sanitizedUser.setPassword(formData.password, function() {
-            sanitizedUser.save();
-            res.redirect("/users/edit-profile");
-          })
-        } else {
-          res.redirect("/");
-        }
-      });
-    } else {
-      res.redirect("/");
+  try {
+    const userId = req.user._id;
+    const { password, ...updates } = req.body;
+
+    const user = await User.findOneAndUpdate({ _id: userId }, updates, {
+      returnOriginal: false,
+      runValidators: true,
+    });
+
+    if (password) {
+      await user.setPassword(formData.password);
+      await user.save();
     }
 
+    helpers.editProfile.renderEditProfileView(res, {
+      user,
+      success: true,
+    });
   } catch (error) {
-    helpers.editProfile.getEditProfileErrorMessages(res, {
-      errors: helpers.editProfile.getEditProfileErrorMessages(error),
+    helpers.editProfile.renderEditProfileView(res, {
+      user: req.user,
+      errors: helpers.getUserFormErrorMessage(error),
     });
   }
 };

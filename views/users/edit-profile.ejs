@@ -1,5 +1,8 @@
 <main>
     <h1>Edit Profile</h1>
+    <% if (locals.success) { %>
+      <div class="form-success">Sucessfully updated profile!</div>
+    <% } %>
     <% if (locals.errors) { %>
       <div class="form-errors">
         <span class="title">Failed to Update profile information:</span>
@@ -12,22 +15,22 @@
     <% } %>
     <form method="POST">
       <label>Username</label>
-      <input name="username" value="<%=username%>"/>
+      <input name="username" value="<%=user.username%>" required/>
   
       <label>Email Address</label>
-      <input name="email" type="email" value="<%=email%>"/>
+      <input name="email" type="email" value="<%=user.email%>" required/>
   
       <label>Type</label>
       <select name="type" required>
         <% for (const userType of userTypes) { 
-            var selected = (type==userType) ? "selected" : "";
-            %>
+            const selected = (user.type === userType) ? "selected" : "";
+        %>
           <option value="<%=userType%>" <%=selected %>><%=userType%></option>  
         <% } %>
       </select>
   
       <label>Password</label>
-      <input name="password" type="password" minlength="6" value="<%=password%>" required />
+      <input name="password" type="password" minlength="6" />
   
       <button type="submit">Edit</button>
     </form>

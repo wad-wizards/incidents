@@ -10,7 +10,7 @@ const ensureNotLoggedIn = (req, res, next) => {
 
 const ensureLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) return next();
-  res.redirect("/");
+  res.redirect("/users/login");
 };
 
 router

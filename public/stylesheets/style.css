@@ -31,3 +31,8 @@ body > footer {
 .form-errors > .title {
   font-weight: bold;
 }
+
+.form-success {
+  color: green;
+  margin: 20px 0;
+}
