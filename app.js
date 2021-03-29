@@ -41,23 +41,6 @@ app.use(
   })
 );
 
-// Initialize flash
-app.use(flash());
-
-//Initialize passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-//passport user configuration
-
-//crate a user model instance
-let userModel = require("../incidents/models/user.model");
-let User = userModel.schema;
-
-//serialize and deserialize the user info
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
 app.use(router);
 
 // catch 404 and forward to error handler
