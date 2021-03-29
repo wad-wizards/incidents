@@ -1,5 +1,12 @@
 <nav>
     <ul>
-    <li style="float:right"><a class="active" href="incidents/new">Login</a></li>
+      <% if (user != null)  { %>
+        <li style="float:right"><a class="active" href="users/sign-up">Sign Up</a></li>
+        <li style="float:right"><a class="active" href="users/login">Login</a></li>
+      <% } else { %> 
+        <li style="float:right"><a class="active" href="/">View Incidents</a></li>
+        <li style="float:right"><a class="active" href="/users/edit-profile">Edit Profile</a></li>
+        <li style="float:right"><a class="active" href="/users/logout">Logout</a></li>
+       <% } %>
   </ul>
 </nav>

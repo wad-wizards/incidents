@@ -1,4 +1,3 @@
-
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
@@ -28,6 +27,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
 
 //express Session setup
 app.use(
@@ -64,4 +68,3 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
-
