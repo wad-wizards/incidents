@@ -1,17 +1,9 @@
 const express = require("express");
 const controller = require("../controllers/user.controller");
+const ensureLoggedIn = require("../middleware/ensureLoggedIn");
+const ensureNotLoggedIn = require("../middleware/ensureNotLoggedIn");
 
 const router = express.Router();
-
-const ensureNotLoggedIn = (req, res, next) => {
-  if (!req.isAuthenticated()) return next();
-  res.redirect("/");
-};
-
-const ensureLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) return next();
-  res.redirect("/users/login");
-};
 
 router
   .route("/users/sign-up")
@@ -21,7 +13,7 @@ router
 router
   .route("/users/login")
   .get(ensureNotLoggedIn, controller.displayLoginPage)
-  .post(ensureNotLoggedIn, controller.login);
+  .post(ensureNotLoggedIn, controller.login, controller.onLoginSuccess);
 
 router
   .route("/users/edit-profile")
