@@ -3,19 +3,31 @@ const controller = require("../controllers/user.controller");
 
 const router = express.Router();
 
+const ensureNotLoggedIn = (req, res, next) => {
+  if (!req.isAuthenticated()) return next();
+  res.redirect("/");
+};
+
+const ensureLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) return next();
+  res.redirect("/users/login");
+};
+
 router
   .route("/users/sign-up")
-  .get(controller.displaySignUpPage)
-  .post(controller.signUp);
+  .get(ensureNotLoggedIn, controller.displaySignUpPage)
+  .post(ensureNotLoggedIn, controller.signUp);
 
 router
   .route("/users/login")
-  .get(controller.displayLoginPage)
-  .post(controller.login);
+  .get(ensureNotLoggedIn, controller.displayLoginPage)
+  .post(ensureNotLoggedIn, controller.login);
 
 router
   .route("/users/edit-profile")
-  .get(controller.displayEditProfilePage)
-  .post(controller.editProfile);
+  .get(ensureLoggedIn, controller.displayEditProfilePage)
+  .post(ensureLoggedIn, controller.editProfile);
+
+router.get("/users/logout", ensureLoggedIn, controller.logout);
 
 module.exports = router;

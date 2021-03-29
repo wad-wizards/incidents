@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const passportLocalMongoose = require("passport-local-mongoose");
 const constants = require("../constants");
 
 const schema = new mongoose.Schema({
@@ -7,10 +7,6 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -24,17 +20,12 @@ const schema = new mongoose.Schema({
   },
 });
 
-schema.pre("save", async function (next) {
-  // Only hash password if it has been modified
-  if (!this.isModified("password")) return next();
-
-  try {
-    const saltRounds = 10;
-    this.password = await bcrypt.hash(this.password, saltRounds);
-    next();
-  } catch (err) {
-    next(err);
-  }
-});
+/**
+ * The passport-local-mongoose library provides the following fields to the schema:
+ *  - username
+ *  - hash (hashed password field)
+ *  - salt (salt used in hashing password)
+ */
+schema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("User", schema);

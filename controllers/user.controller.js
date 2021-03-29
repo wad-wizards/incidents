@@ -8,59 +8,71 @@ const displaySignUpPage = (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-    await User.create(req.body);
+    const { password, ...payload } = req.body;
+    await User.register(payload, password);
     res.redirect("/users/login");
   } catch (error) {
     helpers.signUp.renderSignUpView(res, {
-      errors: helpers.signUp.getSignUpErrorMessages(error),
+      errors: helpers.getUserFormErrorMessage(error),
     });
   }
 };
 
-const displayLoginPage = (req, res, next) => {
-  //Check if user is logged in
-  if (!req.user) {
-    res.render("users/login", {
-      title: "Login",
-      messages: req.flash("loginMessage"),
-    });
-  } else {
-    return res.redirect("/");
-  }
+const displayLoginPage = (req, res) => {
+  res.render("users/login", {
+    title: "Login",
+    errors: req.flash("error"),
+  });
 };
 
-const login = (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    //server error
-    if (err) {
-      return next(err);
-    }
-    //is there a user login error
-    if (!user) {
-      req.flash("loginMessage", "Authentication Error");
-      return res.redirect("/login");
-    }
-    req.login(user, (err) => {
-      //server error
-      if (err) {
-        return next(err);
-      }
-      return res.redirect("/incidents");
-    });
-  })(req, res, next);
+const login = passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/users/login",
+  failureFlash: true,
+});
+
+const logout = (req, res) => {
+  req.logout();
+  res.redirect("/");
 };
 
 const displayEditProfilePage = (req, res) => {
-  res.render("users/edit-profile", { title: "Edit Profile" });
+  helpers.editProfile.renderEditProfileView(res, { user: req.user });
 };
 
-const editProfile = (req, res) => {};
+const editProfile = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { password, ...updates } = req.body;
+
+    const user = await User.findOneAndUpdate({ _id: userId }, updates, {
+      returnOriginal: false,
+      runValidators: true,
+    });
+
+    if (password) {
+      await user.setPassword(formData.password);
+      await user.save();
+    }
+
+    helpers.editProfile.renderEditProfileView(res, {
+      user,
+      success: true,
+    });
+  } catch (error) {
+    helpers.editProfile.renderEditProfileView(res, {
+      user: req.user,
+      errors: helpers.getUserFormErrorMessage(error),
+    });
+  }
+};
 
 module.exports = {
   displaySignUpPage,
   signUp,
   displayLoginPage,
   login,
+  logout,
   displayEditProfilePage,
   editProfile,
 };
