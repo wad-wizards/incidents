@@ -1,22 +1,45 @@
 <main class="container" style="margin-top:25px">
+    <style>
+        fieldset {
+            box-sizing: border-box;
+        }
+        label, button {
+            margin-top: 25px;
+        }
+        input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
     <form method="post">
         <fieldset class="form-group">           
-            <legend style="text-align: right; font-size: 25px;">Update Incident</legend>
+            <legend style="text-align: right; font-size: 25px;">Update Incident: <%=incident.recordNumber%></legend>
             <label for="title">Title: </label>
-            <textarea 
-                name="title"
-                style="max-height: 50px" required><%=Incident.title%></textarea>
+            <input value="<%=incident.title%>" required />
 
-            <label for="description" style="padding-top: 25px"> Description:</label>
-            <textarea name="description" required><%=Incident.description%></textarea>
+            <label for="customer">Customer: </label>
+            <input value="<%=incident.customer%>" required />
 
-            <label for="priority" style="padding-top: 25px">Priority</label>
-                <select name="priority" value = "<%= Incident.priority %>" style="margin-bottom: 25px">
-                    <option value="LOW" <%= Incident.priority === "LOW" ? "selected" : "" %>>Low</option>
-                    <option value="MEDIUM" <%= Incident.priority === "MEDIUM" ? "selected" : "" %>>Medium</option>
-                    <option value="HIGH" <%= Incident.priority === "HIGH" ? "selected" : "" %>>High</option>
-                </select>
+            <label for="description">Description:</label>
+            <textarea name="description" required><%=incident.description%></textarea>
 
+            <label for="priority">Priority</label>
+            <%-
+                renderSelect({ 
+                    name: "priority",
+                    options: constants.incidents.priorities, 
+                    selected: incident.priority
+                })
+            %>
+
+            <label for="status">Status</label>
+            <%-
+                renderSelect({ 
+                    name: "status", 
+                    options: constants.incidents.statuses, 
+                    selected: incident.status 
+                })
+            %>
             <button type="submit">Update Incident</button>
         
         </fieldset>

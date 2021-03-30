@@ -1,4 +1,9 @@
 module.exports = {
-  incidentPriorities: ["LOW", "MEDIUM", "HIGH"],
-  userTypes: ["Software Engineer", "Project Manager", "Product Designer"],
+  incidents: {
+    priorities: ["LOW", "MEDIUM", "HIGH"],
+    statuses: ["Created", "In Progress", "Dispatched", "Closed"],
+  },
+  users: {
+    types: ["Software Engineer", "Project Manager", "Product Designer"],
+  },
 };

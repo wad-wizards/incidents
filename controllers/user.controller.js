@@ -25,14 +25,15 @@ const displayLoginPage = (req, res) => {
   });
 };
 
-const login = passport.authenticate("local", {
-  failureRedirect: "/users/login",
-  failureFlash: true,
-});
+const login = (req, res) => {
+  const { redirect: successRedirect = "/" } = req.query;
+  const failureRedirect = `/users/login?redirect=${successRedirect}`;
 
-const onLoginSuccess = (req, res) => {
-  const { redirect = "/" } = req.query;
-  res.redirect(redirect);
+  passport.authenticate("local", {
+    successRedirect,
+    failureRedirect,
+    failureFlash: true,
+  })(req, res);
 };
 
 const logout = (req, res) => {
@@ -76,7 +77,6 @@ module.exports = {
   signUp,
   displayLoginPage,
   login,
-  onLoginSuccess,
   logout,
   displayEditProfilePage,
   editProfile,

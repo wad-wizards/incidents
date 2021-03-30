@@ -1,6 +1,16 @@
 const constants = require("../constants");
+const { nanoid } = require("nanoid");
 
 module.exports = {
+  generateRecordNumber() {
+    const now = new Date();
+    const year = String(now.getUTCFullYear()).substring(0, 2);
+    const month = now.getUTCMonth() + 1;
+    const day = now.getUTCDate();
+    const randomId = nanoid(6);
+
+    return `${day}${month}${year}-${randomId}`;
+  },
   getUserFormErrorMessage(error) {
     if (error.code && error.code === 11000) {
       const key = Object.keys(error.keyValue)[0];
@@ -18,7 +28,6 @@ module.exports = {
     renderSignUpView(res, params = {}) {
       res.render("users/sign-up", {
         title: "Sign Up",
-        userTypes: constants.userTypes,
         ...params,
       });
     },
@@ -27,7 +36,6 @@ module.exports = {
     renderEditProfileView(res, params = {}) {
       res.render("users/edit-profile", {
         title: "Edit Profile",
-        userTypes: constants.userTypes,
         ...params,
       });
     },

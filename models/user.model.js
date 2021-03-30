@@ -15,7 +15,7 @@ const schema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: constants.userTypes,
+    enum: constants.users.types,
     required: true,
   },
 });

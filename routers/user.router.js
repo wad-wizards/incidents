@@ -13,7 +13,7 @@ router
 router
   .route("/users/login")
   .get(ensureNotLoggedIn, controller.displayLoginPage)
-  .post(ensureNotLoggedIn, controller.login, controller.onLoginSuccess);
+  .post(ensureNotLoggedIn, controller.login);
 
 router
   .route("/users/edit-profile")

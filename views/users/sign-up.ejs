@@ -18,11 +18,7 @@
     <input name="email" type="email"  />
 
     <label>Type</label>
-    <select name="type" required>
-      <% for (const type of userTypes) { %>
-        <option value="<%=type%>"><%=type%></option>  
-      <% } %>
-    </select>
+    <%- renderSelect({ name: "type", options: constants.users.types }) %>
 
     <label>Password</label>
     <input name="password" type="password" minlength="6" required />
