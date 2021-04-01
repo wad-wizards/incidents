@@ -66,7 +66,6 @@ const editProfile = async (req, res) => {
     });
   } catch (error) {
     helpers.editProfile.renderEditProfileView(res, {
-      user: req.user,
       errors: helpers.getUserFormErrorMessage(error),
     });
   }
