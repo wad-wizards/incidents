@@ -1,17 +1,9 @@
 const express = require("express");
 const controller = require("../controllers/user.controller");
+const ensureLoggedIn = require("../middleware/ensureLoggedIn");
+const ensureNotLoggedIn = require("../middleware/ensureNotLoggedIn");
 
 const router = express.Router();
-
-const ensureNotLoggedIn = (req, res, next) => {
-  if (!req.isAuthenticated()) return next();
-  res.redirect("/");
-};
-
-const ensureLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) return next();
-  res.redirect("/users/login");
-};
 
 router
   .route("/users/sign-up")

@@ -25,11 +25,16 @@ const displayLoginPage = (req, res) => {
   });
 };
 
-const login = passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/users/login",
-  failureFlash: true,
-});
+const login = (req, res) => {
+  const { redirect: successRedirect = "/" } = req.query;
+  const failureRedirect = `/users/login?redirect=${successRedirect}`;
+
+  passport.authenticate("local", {
+    successRedirect,
+    failureRedirect,
+    failureFlash: true,
+  })(req, res);
+};
 
 const logout = (req, res) => {
   req.logout();
@@ -51,7 +56,7 @@ const editProfile = async (req, res) => {
     });
 
     if (password) {
-      await user.setPassword(formData.password);
+      await user.setPassword(password);
       await user.save();
     }
 
@@ -61,7 +66,6 @@ const editProfile = async (req, res) => {
     });
   } catch (error) {
     helpers.editProfile.renderEditProfileView(res, {
-      user: req.user,
       errors: helpers.getUserFormErrorMessage(error),
     });
   }

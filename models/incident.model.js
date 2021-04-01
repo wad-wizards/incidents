@@ -13,8 +13,22 @@ const schema = new mongoose.Schema(
     },
     priority: {
       type: String,
-      enum: constants.incidentPriorities,
+      enum: constants.incidents.priorities,
       required: true,
+    },
+    customer: {
+      type: String,
+      required: true,
+    },
+    recordNumber: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: constants.incidents.statuses,
+      required: true,
+      default: "Created",
     },
   },
   {

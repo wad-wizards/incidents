@@ -1,4 +1,5 @@
 const Incident = require("../models/incident.model");
+const helpers = require("./helpers");
 
 /*
 "Create Incident" Page: 
@@ -13,22 +14,14 @@ const displayCreateIncidentPage = (req, res) => {
 - Create new incident on database using form data
 - Redirect back to landing page
 */
-const createIncident = (req, res) => {
+const createIncident = async (req, res) => {
   const formData = req.body;
-  let newIncident = Incident({
-    title: formData.title,
-    description: formData.description,
-    priority: formData.priority,
-  });
-
-  Incident.create(newIncident, (err, Incident) => {
-    if (err) {
-      console.log(err);
-      res.end(err);
-    } else {
-      res.redirect("/");
-    }
-  });
+  const data = {
+    ...formData,
+    recordNumber: helpers.generateRecordNumber(),
+  };
+  await Incident.create(data);
+  res.redirect("/");
 };
 
 /*
@@ -38,19 +31,14 @@ const createIncident = (req, res) => {
   - If exists, pass object containing incident data into view
   - If not, redirect to /not-found
 */
-const displayUpdateIncidentPage = (req, res) => {
+const displayUpdateIncidentPage = async (req, res) => {
   const incidentId = req.params.id;
+  const incident = await Incident.findById(incidentId);
+  if (!incident) return res.redirect("/not-found");
 
-  Incident.findById(incidentId, (err, incidentToUpdate) => {
-    if (err) {
-      console.log(err);
-      res.end(err);
-    } else {
-      res.render("incidents/update", {
-        title: "Update Incident",
-        Incident: incidentToUpdate,
-      });
-    }
+  res.render("incidents/update", {
+    title: "Update Incident",
+    incident,
   });
 };
 
@@ -64,19 +52,11 @@ const displayUpdateIncidentPage = (req, res) => {
 const updateIncident = (req, res) => {
   const incidentId = req.params.id;
   const formData = req.body;
-  let updatedIncident = Incident({
-    _id: incidentId,
-    title: formData.title,
-    description: formData.description,
-    priority: formData.priority,
-  });
 
-  Incident.updateOne({ _id: incidentId }, updatedIncident, (err) => {
+  Incident.updateOne({ _id: incidentId }, formData, (err) => {
     if (err) {
-      console.log(err);
       res.end(err);
     } else {
-      //refresh the contacts list
       res.redirect("/");
     }
   });

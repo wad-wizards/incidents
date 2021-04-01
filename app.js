@@ -9,6 +9,7 @@ const flash = require("connect-flash");
 const db = require("./db");
 const router = require("./routers");
 const usePassport = require("./middleware/passport");
+const setViewGlobals = require("./middleware/setViewGlobals");
 
 db.connect();
 
@@ -47,6 +48,9 @@ app.use(flash());
 
 //Initialize passport
 usePassport(app);
+
+// Attach view globals middleware
+app.use(setViewGlobals);
 
 // Initialize router
 app.use(router);

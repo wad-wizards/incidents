@@ -21,13 +21,13 @@
       <input name="email" type="email" value="<%=user.email%>" required/>
   
       <label>Type</label>
-      <select name="type" required>
-        <% for (const userType of userTypes) { 
-            const selected = (user.type === userType) ? "selected" : "";
-        %>
-          <option value="<%=userType%>" <%=selected %>><%=userType%></option>  
-        <% } %>
-      </select>
+      <%-
+          renderSelect({ 
+              name: "type",
+              options: constants.users.types, 
+              selected: user.type
+          })
+      %>
   
       <label>Password</label>
       <input name="password" type="password" minlength="6" />
