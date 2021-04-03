@@ -3,7 +3,11 @@ const User = require("../models/user.model");
 const helpers = require("./helpers");
 
 const displaySignUpPage = (req, res) => {
-  helpers.signUp.renderSignUpView(res);
+  //helpers.signUp.renderSignUpView(res);
+  res.render("users/sign-up", {
+    title: "Sign Up",
+    //errors: req.flash("error"),
+  });
 };
 
 const signUp = async (req, res) => {

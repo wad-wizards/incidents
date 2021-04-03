@@ -4,71 +4,70 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const expressLayouts = require("express-ejs-layouts");
-const session = require("express-session");
 const flash = require("connect-flash");
-const db = require("./db");
 const router = require("./routers");
+const useSession = require("./middleware/session");
 const usePassport = require("./middleware/passport");
 const setViewGlobals = require("./middleware/setViewGlobals");
 
-db.connect();
+module.exports = () => {
+  const app = express();
 
-const app = express();
+  // view engine setup
+  app.set("views", path.join(__dirname, "views"));
+  app.set("view engine", "ejs");
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+  // layout engine setup
+  app.use(expressLayouts);
+  app.set("layout", path.join(__dirname, "views/layouts/index"));
 
-// layout engine setup
-app.use(expressLayouts);
-app.set("layout", path.join(__dirname, "views/layouts/index"));
+  app.use(logger("dev"));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use(cookieParser());
+  app.use(express.static(path.join(__dirname, "public")));
 
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+  // Session setup
+  useSession(app);
 
-app.use((req, res, next) => {
-  res.locals.user = req.user;
-  next();
-});
+  // Initialize flash
+  app.use(flash());
 
-//express Session setup
-app.use(
-  session({
-    secret: "SomeSecret",
-    saveUninitialized: false,
-    resave: false,
-  })
-);
+  // Initialize passport
+  usePassport(app);
 
-// Initialize flash
-app.use(flash());
+  // Attach view globals middleware
+  app.use(setViewGlobals);
 
-//Initialize passport
-usePassport(app);
+  //Initialize passport
+  usePassport(app);
+  //app.use(passport.initialize());
+  //app.use(passport.session());
 
-// Attach view globals middleware
-app.use(setViewGlobals);
+  //create a usermodel instance
+  let userModel = require("./models/user.model");
+  const passport = require("./middleware/passport");
+  let User = userModel.User;
 
-// Initialize router
-app.use(router);
+  //passport seralize and deserailize the User Info
+  //passport.serializeUser(User.serializeUser());
+  //passport.deserializeUser(User.deserializeUser());
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
+  // catch 404 and forward to error handler
+  app.use(function (req, res, next) {
+    next(createError(404));
+  });
 
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  // error handler
+  app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
-});
+    // render the error page
+    res.status(err.status || 500);
+    res.render("error");
+  });
 
-module.exports = app;
+  return app;
+};
