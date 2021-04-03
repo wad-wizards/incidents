@@ -48,6 +48,17 @@ app.use(flash());
 
 //Initialize passport
 usePassport(app);
+//app.use(passport.initialize());
+//app.use(passport.session());
+
+//create a usermodel instance
+let userModel = require("./models/user.model");
+const passport = require("./middleware/passport");
+let User = userModel.User;
+
+//passport seralize and deserailize the User Info
+//passport.serializeUser(User.serializeUser());
+//passport.deserializeUser(User.deserializeUser());
 
 // Attach view globals middleware
 app.use(setViewGlobals);

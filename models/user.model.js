@@ -3,20 +3,30 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const constants = require("../constants");
 
 const schema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   email: {
     type: String,
-    required: true,
+    required: "email is required",
     unique: true,
+    trim: true,
   },
   type: {
     type: String,
-    enum: constants.users.types,
+    enum: constants.userTypes,
     required: true,
+  },
+  username: {
+    type: String,
+    required: "user name is required",
+    unique: true,
+    trim: true,
+  },
+  created: {
+    type: Date,
+    default: Date.now,
+  },
+  update: {
+    type: Date,
+    default: Date.now,
   },
 });
 
@@ -26,6 +36,10 @@ const schema = new mongoose.Schema({
  *  - hash (hashed password field)
  *  - salt (salt used in hashing password)
  */
-schema.plugin(passportLocalMongoose);
+
+//configure options for user.model
+
+let options = { missingPasswordError: "Wrong/Missing Password" };
+schema.plugin(passportLocalMongoose, options);
 
 module.exports = mongoose.model("User", schema);
