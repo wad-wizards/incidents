@@ -10,6 +10,9 @@ const useSession = require("./middleware/session");
 const usePassport = require("./middleware/passport");
 const setViewGlobals = require("./middleware/setViewGlobals");
 
+let userModel = require("./models/user.model");
+let User = userModel.User;
+
 module.exports = () => {
   const app = express();
 
@@ -38,20 +41,9 @@ module.exports = () => {
 
   // Attach view globals middleware
   app.use(setViewGlobals);
-
-  //Initialize passport
-  usePassport(app);
-  //app.use(passport.initialize());
-  //app.use(passport.session());
-
-  //create a usermodel instance
-  let userModel = require("./models/user.model");
-  const passport = require("./middleware/passport");
-  let User = userModel.User;
-
-  //passport seralize and deserailize the User Info
-  //passport.serializeUser(User.serializeUser());
-  //passport.deserializeUser(User.deserializeUser());
+  
+  // Initialize router
+  app.use(router);
 
   // catch 404 and forward to error handler
   app.use(function (req, res, next) {
