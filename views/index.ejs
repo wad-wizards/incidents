@@ -1,7 +1,6 @@
-<%- include layouts/navigation.ejs %>
 <!-- Main Content -->
-<% if (user != null)  { %>
 <main>
+    <% if (user != null)  { %>
     <a href="incidents/new">
         <button style="width: 100%;  border-radius: 16px; font-size: 25px;"> 
             Create Incident
@@ -35,5 +34,5 @@
             </tr>
         <% } %>
     </table>
+    <% } %>
 </main>
-<% } %>

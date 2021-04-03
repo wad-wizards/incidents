@@ -60,7 +60,7 @@ const editProfile = async (req, res) => {
     });
 
     if (password) {
-      await user.setPassword(formData.password);
+      await user.setPassword(password);
       await user.save();
     }
 
@@ -70,7 +70,6 @@ const editProfile = async (req, res) => {
     });
   } catch (error) {
     helpers.editProfile.renderEditProfileView(res, {
-      user: req.user,
       errors: helpers.getUserFormErrorMessage(error),
     });
   }

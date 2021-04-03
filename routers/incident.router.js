@@ -1,12 +1,8 @@
 const express = require("express");
 const controller = require("../controllers/incident.controller");
+const ensureLoggedIn = require("../middleware/ensureLoggedIn");
 
 const router = express.Router();
-
-const ensureLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) return next();
-  res.redirect("/users/login");
-};
 
 router
   .route("/incidents/new")

@@ -3,6 +3,7 @@ const constants = require("../constants");
 module.exports = function setViewGlobals(req, res, next) {
   res.locals.constants = constants;
   res.locals.renderSelect = renderSelect;
+  res.locals.user = req.user || null;
   next();
 };
 
