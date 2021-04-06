@@ -1,14 +1,21 @@
-
-
-<nav class="navbar navbar-expand navbar-dark" style="background-color:black">
+<nav>
     <ul>
-      <% if (user == null)  { %>
-        <li style="float:right"><a class="active" href="/users/sign-up">Sign Up</a></li>
-        <li style="float:right"><a class="active" href="/users/login">Login</a></li>
+      <% if (user == null)  { %>        
+          <li><a href="/users/sign-up"
+            <% if (title=="Sign Up") { %> class="active" <% } %>
+            >Sign Up</a>
+          </li>
+          <li><a href="/users/login"
+            <% if (title=="Login") { %> class="active" <% } %>
+            >Login</a></li>
       <% } else { %> 
-        <li style="float:right"><a class="active" href="/">View Incidents</a></li>
-        <li style="float:right"><a class="active" href="/users/edit-profile">Edit Profile</a></li>
-        <li style="float:right"><a class="active" href="/users/logout">Logout</a></li>
+          <li><a href="/"
+            <% if (title=="Incidents") { %> class="active" <% } %>
+            >View Incidents</a></li>   
+          <li><a href="/users/edit-profile"
+            <% if (title=="Edit Profile") { %> class="active" <% } %>
+            >Edit Profile</a></li>         
+          <li><a href="/users/logout">Logout</a></li>
        <% } %>
   </ul>
 </nav>

@@ -1,5 +1,17 @@
+/** Colour Palette
+Rich Black:   #0A0A0A
+Oxford Blue:  #14213d
+Orange Web:   #fca311
+Platinum:     #e5e5e5
+Cultured:     #F2F2F2
+**/
+
 * {
   font-family: "Roboto Slab", serif;
+}
+
+body {
+  background-color: #14213d;
 }
 
 body > header {
@@ -9,14 +21,19 @@ body > header {
 }
 
 .logo {
-  height: 280px;
+  height: auto;
+  width: 150px;
   filter: saturate(1.5);
 }
 
 .brand-name {
   font-family: "Fraunces", serif;
-  font-size: 28px;
   margin-bottom: 50px;
+  color: #fca311;
+  text-transform: uppercase;
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 body > footer {
@@ -24,7 +41,7 @@ body > footer {
 }
 
 .form-errors {
-  color: red;
+  color: #fca311;
   margin: 20px 0;
 }
 
@@ -44,18 +61,87 @@ ul {
   overflow: hidden;
 }
 
-li {
-  float: left;
-}
-
-li a {
+nav > ul > li {
   display: block;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  float: right;
 }
 
-li a:hover {
-  background-color: #111;
-  color: white;
+a {
+  color: #e5e5e5;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  color: #e5e5e5b2;
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+nav {
+  background-color: #0a0a0ae0;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.active {
+  color: #fca311;
+  font-weight: bold;
+}
+
+input,
+textarea {
+  background-color: #e5e5e5;
+  color: #0a0a0a;
+}
+
+button {
+  background-color: #fca311;
+  color: #0a0a0a;
+  font-weight: bold;
+  margin-top: 25px;
+}
+
+button:hover {
+  background-color: #fca2118c;
+}
+
+.container {
+  margin-top: 25px;
+}
+
+h1 {
+  color: #fca311;
+}
+
+select {
+  background-color: #e5e5e5;
+  width: max-content;
+  color: #0a0a0a;
+}
+
+option {
+  background-color: #e5e5e5;
+  color: #0a0a0a;
+}
+
+input:focus,
+select:focus,
+button:focus {
+  box-shadow: 0 0 0 2px #fca311;
 }
