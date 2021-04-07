@@ -7,13 +7,12 @@
         </button>
     </a>
 
-    <h2><%= title %></h2>
-    
-    <table style="width: auto;">
+    <h1>Incident Dashboard</h2>   
+    <table>
         <!-- Header Row-->
         <tr>
-            <th>Title</th>
-            <th>Description</th>
+            <th class="htitle">Title</th>
+            <th class="hdesc">Description</th>
             <th>Priority</th>
             <th></th>
             <th></th>
@@ -22,14 +21,14 @@
         <!-- Repeatable Template Row -->
         <% for(let count = 0; count < incidentsData.length; count++) { %>
             <tr>
-                <td><%= incidentsData[count].title %></td>
+                <td  class="tabletitle"><%= incidentsData[count].title %></td>
                 <td><%= incidentsData[count].description %></td>
                 <td><%= incidentsData[count].priority %></td>
                 <td>
-                    <a href="/incidents/<%= incidentsData[count]._id %>/edit">Edit</a>
+                    <a class="button" href="/incidents/<%= incidentsData[count]._id %>/edit">Update</a>
                 </td>
                 <td>
-                    <a href="/incidents/<%= incidentsData[count]._id %>/delete">Delete</a>
+                    <a class="button" href="/incidents/<%= incidentsData[count]._id %>/delete">Delete</a>
                 </td>
             </tr>
         <% } %>

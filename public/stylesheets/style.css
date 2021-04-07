@@ -20,6 +20,10 @@ body > header {
   align-items: flex-end;
 }
 
+.container {
+  margin-top: 25px;
+}
+
 .logo {
   height: auto;
   width: 150px;
@@ -50,8 +54,36 @@ body > footer {
 }
 
 .form-success {
-  color: green;
+  color: #f2f2f2;
   margin: 20px 0;
+}
+
+h1 {
+  color: #fca311;
+}
+
+a {
+  color: #e5e5e5;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+}
+
+a:hover {
+  color: #e5e5e5b2;
+}
+
+nav {
+  background-color: #0a0a0ae0;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 2px;
 }
 
 ul {
@@ -69,45 +101,9 @@ nav > ul > li {
   float: right;
 }
 
-a {
-  color: #e5e5e5;
-}
-
-a:link {
-  text-decoration: none;
-}
-
-a:visited {
-  text-decoration: none;
-}
-
-a:hover {
-  color: #e5e5e5b2;
-  text-decoration: none;
-}
-
-a:active {
-  text-decoration: none;
-}
-
-nav {
-  background-color: #0a0a0ae0;
-  border-radius: 5px;
-  text-transform: uppercase;
-  font-size: 15px;
-  font-weight: bold;
-  letter-spacing: 2px;
-}
-
 .active {
   color: #fca311;
   font-weight: bold;
-}
-
-input,
-textarea {
-  background-color: #e5e5e5;
-  color: #0a0a0a;
 }
 
 button {
@@ -117,16 +113,22 @@ button {
   margin-top: 25px;
 }
 
-button:hover {
+a.button {
+  background-color: #fca311;
+  color: #0a0a0a;
+  padding: 5px 10px 5px 10px;
+  border-radius: 6px;
+  border-color: #fca2118c;
+}
+
+button:hover,
+a.button:hover {
   background-color: #fca2118c;
 }
 
-.container {
-  margin-top: 25px;
-}
-
-h1 {
-  color: #fca311;
+button:focus,
+a.button:focus {
+  box-shadow: 0 0 0 1px #fca2118c;
 }
 
 select {
@@ -142,6 +144,70 @@ option {
 
 input:focus,
 select:focus,
-button:focus {
+textarea:focus {
   box-shadow: 0 0 0 2px #fca311;
+}
+
+input,
+textarea {
+  background-color: #e5e5e5;
+  color: #0a0a0a;
+}
+
+::selection {
+  background-color: #14213d;
+}
+
+label {
+  margin-top: 25px;
+}
+
+fieldset {
+  border-color: #fca311;
+}
+
+legend {
+  text-align: right;
+  font-size: 25px;
+  color: #fca311;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+th {
+  color: #0a0a0a;
+  background-color: #fca311;
+}
+
+.htitle {
+  width: 25%;
+}
+
+.hdesc {
+  width: 42%;
+}
+
+td {
+  padding: 10px 5px;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.tabletitle {
+  white-space: normal;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #e5e5e50e;
+}
+
+tbody tr:hover,
+tr:hover {
+  background-color: #0a0a0a;
 }

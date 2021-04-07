@@ -1,25 +1,13 @@
 
 <main class="container">
-    <style>
-        fieldset {
-            box-sizing: border-box;
-        }
-        label, button {
-            margin-top: 25px;
-        }
-        input {
-            width: 100%;
-            box-sizing: border-box;
-        }
-    </style>
     <form method="post">
         <fieldset class="form-group">           
-            <legend style="text-align: right; font-size: 25px;">Update Incident: <%=incident.recordNumber%></legend>
+            <legend>update incident: <%=incident.recordNumber%></legend>
             <label for="title">Title: </label>
-            <input value="<%=incident.title%>" required />
+            <input name="title" value="<%=incident.title%>" required />
 
             <label for="customer">Customer: </label>
-            <input value="<%=incident.customer%>" required />
+            <input name="customer" value="<%=incident.customer%>" required />
 
             <label for="description">Description:</label>
             <textarea name="description" required><%=incident.description%></textarea>
