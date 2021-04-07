@@ -41,7 +41,7 @@ module.exports = () => {
 
   // Attach view globals middleware
   app.use(setViewGlobals);
-
+  
   // Initialize router
   app.use(router);
 
