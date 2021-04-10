@@ -20,7 +20,7 @@
 
         <!-- Repeatable Template Row -->
         <% for(let count = 0; count < incidentsData.length; count++) { %>
-          <tr onclick="window.location='/incidents/<%= incidentsData[count]._id %>/edit';">
+            <tr onclick="window.location='/incidents/<%= incidentsData[count]._id %>/view';">
                 <td  class="tabletitle"><%= incidentsData[count].title %></td>
                 <td><%= incidentsData[count].description %></td>
                 <td><%= incidentsData[count].priority %></td>

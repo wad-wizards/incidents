@@ -42,6 +42,17 @@ const displayUpdateIncidentPage = async (req, res) => {
   });
 };
 
+const displayIncidentPage = async (req, res) => {
+  const incidentId = req.params.id;
+  const incident = await Incident.findById(incidentId);
+  if (!incident) return res.redirect("/not-found");
+
+  res.render("incidents/view", {
+    title: "View Incident",
+    incident,
+  });
+};
+
 /*
 "Update Incident" Handler: 
 - Check if incident with specified id exists:
@@ -82,6 +93,7 @@ module.exports = {
   displayCreateIncidentPage,
   createIncident,
   displayUpdateIncidentPage,
+  displayIncidentPage,
   updateIncident,
   deleteIncident,
 };

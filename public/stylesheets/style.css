@@ -8,8 +8,9 @@ Cultured:     #F2F2F2
 
 * {
   font-family: "Roboto Slab", serif;
-  color:  #e5e5e5;
+  color: #e5e5e5;
 }
+
 
 body {
   background-color: #14213d;
@@ -59,7 +60,12 @@ body > footer {
   margin: 20px 0;
 }
 
-h1 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #fca311;
 }
 
