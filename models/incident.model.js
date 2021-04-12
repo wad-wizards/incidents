@@ -30,6 +30,9 @@ const schema = new mongoose.Schema(
       required: true,
       default: "Created",
     },
+    resolution: {
+      type: String,
+    }
   },
   {
     timestamps: true,

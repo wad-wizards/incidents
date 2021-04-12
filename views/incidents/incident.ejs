@@ -91,6 +91,12 @@
         <div class="label">Description</div>
         <div><%=incident.description%></div>
       </div>
+      <% if (incident.status === "Closed") { %>
+        <div class="block">
+          <div class="label">Resolution</div>
+          <div><%=incident.resolution%></div>
+        </div>
+      <% } %>
       <div class="cta">
         <% if (incident.status !== "Closed") { %>
           <a href="/incidents/<%=incident.recordNumber%>/edit">

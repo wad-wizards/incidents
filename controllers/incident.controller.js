@@ -62,8 +62,12 @@ const updateIncident = async (req, res) => {
   const { recordNumber } = incident;
 
   const changes = helpers.objectDiff(incident.toObject(), formData);
+  const isClosingIncident = changes.status && changes.status.next === "Closed";
   
-  await Incident.updateOne({ recordNumber }, formData);
+  await Incident.updateOne({ recordNumber }, {
+    ...formData,
+    resolution: isClosingIncident ? narrative : null
+  });
   await Narrative.create({
     narrative,
     changes,
