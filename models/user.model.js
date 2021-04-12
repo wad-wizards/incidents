@@ -2,18 +2,23 @@ const mongoose = require("mongoose");
 const passportLocalMongoose = require("passport-local-mongoose");
 const constants = require("../constants");
 
-const schema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
+const schema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    type: {
+      type: String,
+      enum: constants.users.types,
+      required: true,
+    },
   },
-  type: {
-    type: String,
-    enum: constants.users.types,
-    required: true,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 /**
  * The passport-local-mongoose library provides the following fields to the schema:
@@ -21,8 +26,6 @@ const schema = new mongoose.Schema({
  *  - hash (hashed password field)
  *  - salt (salt used in hashing password)
  */
-
-//configure options for user.model
 
 schema.plugin(passportLocalMongoose);
 
