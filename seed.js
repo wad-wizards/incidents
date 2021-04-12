@@ -1,6 +1,8 @@
 const faker = require("faker");
 const db = require("./db");
 const Incident = require("./models/incident.model");
+const Narrative = require("./models/narrative.model");
+const Comment = require("./models/comment.model");
 const { generateRecordNumber } = require("./controllers/helpers");
 
 const collect = (x) => (cb) => {
@@ -22,6 +24,8 @@ const fakeInicident = () => ({
 async function seed() {
   await db.connect();
   await Incident.deleteMany({});
+  await Narrative.deleteMany({});
+  await Comment.deleteMany({});
   await Incident.insertMany(collect(20)(fakeInicident));
   await db.closeConnection();
 }
