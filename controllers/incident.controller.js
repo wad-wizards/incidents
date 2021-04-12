@@ -42,6 +42,11 @@ const createIncident = async (req, res) => {
 */
 const displayUpdateIncidentPage = async (req, res) => {
   const incident = await getIncidentFromReq(req);
+
+  if (incident.status === "Closed") {
+    return res.redirect(`/incidents/${incident.recordNumber}`);
+  }
+
   res.render("incidents/update", {
     title: "Update Incident",
     incident,
