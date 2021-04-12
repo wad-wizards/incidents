@@ -18,7 +18,7 @@
     margin-top: 0;
   }
   h2 {
-    text-decoration: underline;
+    margin: 30px 0;
   }
   .block {
     margin-bottom: 25px;
@@ -32,12 +32,28 @@
     display: flex;
     justify-content: flex-end;
   }
+  .narratives {
+    border-bottom: medium solid white;
+  }
   .narrative {
-    border-bottom: thin solid #777;
     padding: 15px 5px;
   }
   b {
     color: #fca311
+  }
+  .comments textarea {
+    height: 80px;
+  }
+  .comments form {
+    margin-top: 50px;
+  }
+  .comment {
+    display: flex;
+    padding: 10px 0;
+  }
+  .comment-text {
+    flex: 1;
+    padding: 0 10px;
   }
 </style>
 <main>
@@ -102,6 +118,22 @@
         </div>
         <%  %>
       </div>
+    <% } %>
+  </div>
+  <div class="comments" id="comments">
+    <h2>Comments</h2>
+    <% for (const comment of sortByDescCreatedAt(comments)) { %>
+      <div class="comment">
+        <div class="comment-author"><em>@<%=comment.author.username%></em></div>
+        <div class="comment-text"><%=comment.comment%></div>
+        <div class="comment-created"><em><%=timestamp(comment.createdAt)%></em></div>
+      </div>
+    <% } %>
+    <% if (incident.status !== "Closed") { %>
+      <form action="/incidents/<%=incident.recordNumber%>/comments" method="POST">
+        <textarea name="comment" placeholder="Post a comment"></textarea>
+        <button type="submit">Submit</button>
+      </form>
     <% } %>
   </div>
 </main>

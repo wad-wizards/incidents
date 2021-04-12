@@ -18,4 +18,6 @@ router.get("/incidents/:id/delete", ensureLoggedIn, controller.deleteIncident);
 
 router.get("/incidents/:id", ensureLoggedIn, controller.displayIncidentPage);
 
+router.post("/incidents/:id/comments", ensureLoggedIn, controller.createComment);
+
 module.exports = router;

@@ -1,6 +1,14 @@
 const Incident = require("../models/incident.model");
 const Narrative = require("../models/narrative.model");
+const Comment = require("../models/comment.model");
 const helpers = require("./helpers");
+
+const getIncidentFromReq = async req => {
+  const recordNumber = req.params.id;
+  const incident = await Incident.findOne({ recordNumber });
+  if (!incident) return res.redirect("/not-found");
+  return incident;
+}
 
 /*
 "Create Incident" Page: 
@@ -33,10 +41,7 @@ const createIncident = async (req, res) => {
   - If not, redirect to /not-found
 */
 const displayUpdateIncidentPage = async (req, res) => {
-  const recordNumber = req.params.id;
-  const incident = await Incident.findOne({ recordNumber });
-  if (!incident) return res.redirect("/not-found");
-
+  const incident = await getIncidentFromReq(req);
   res.render("incidents/update", {
     title: "Update Incident",
     incident,
@@ -51,11 +56,10 @@ const displayUpdateIncidentPage = async (req, res) => {
 - Redirect to landing page
 */
 const updateIncident = async (req, res) => {
-  const recordNumber = req.params.id;
   const { narrative, ...formData } = req.body;
 
-  const incident = await Incident.findOne({ recordNumber });
-  if (!incident) return res.redirect("/not-found");
+  const incident = await getIncidentFromReq(req);
+  const { recordNumber } = incident;
 
   const changes = helpers.objectDiff(incident.toObject(), formData);
   
@@ -87,15 +91,23 @@ const deleteIncident = async (req, res) => {
 };
 
 const displayIncidentPage = async (req, res) => {
-  const recordNumber = req.params.id;
-  const incident = await Incident.findOne({ recordNumber });
-  
-  if (!incident) return res.redirect("/not-found");
-
+  const incident = await getIncidentFromReq(req);
   const narratives = await Narrative.find({ incident: incident._id }).populate("author");
+  const comments = await Comment.find({ incident: incident._id }).populate("author");
   
-  res.render("incidents/incident", { incident, narratives });
+  res.render("incidents/incident", { incident, narratives, comments });
 };
+
+const createComment = async (req, res) => {
+  const incident = await getIncidentFromReq(req);
+  await Comment.create({
+    comment: req.body.comment,
+    author: req.user._id,
+    incident: incident._id,
+  });
+
+  res.redirect(`/incidents/${incident.recordNumber}#comments`);
+}
 
 module.exports = {
   displayCreateIncidentPage,
@@ -103,5 +115,6 @@ module.exports = {
   displayUpdateIncidentPage,
   updateIncident,
   deleteIncident,
-  displayIncidentPage
+  displayIncidentPage,
+  createComment
 };
