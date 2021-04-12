@@ -24,6 +24,19 @@ module.exports = {
       message.replace("Path ", "").replace(/`/g, "")
     );
   },
+  objectDiff(o1, o2) {
+    return Object.keys(o2).reduce((diff, key) => {
+      if (o1[key] === o2[key]) return diff;
+
+      return {
+        ...diff,
+        [key]: {
+          prev: o1[key],
+          next: o2[key]
+        }
+      }
+    }, {});
+  },
   signUp: {
     renderSignUpView(res, params = {}) {
       res.render("users/sign-up", {

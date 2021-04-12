@@ -2,18 +2,18 @@
     <ul>
       <% if (user == null)  { %>        
           <li><a href="/users/sign-up"
-            <% if (title=="Sign Up") { %> class="active" <% } %>
+            <% if (locals.title=="Sign Up") { %> class="active" <% } %>
             >Sign Up</a>
           </li>
           <li><a href="/users/login"
-            <% if (title=="Login") { %> class="active" <% } %>
+            <% if (locals.title=="Login") { %> class="active" <% } %>
             >Login</a></li>
       <% } else { %> 
           <li><a href="/"
-            <% if (title=="Incidents") { %> class="active" <% } %>
+            <% if (locals.title=="Incidents") { %> class="active" <% } %>
             >View Incidents</a></li>   
           <li><a href="/users/edit-profile"
-            <% if (title=="Edit Profile") { %> class="active" <% } %>
+            <% if (locals.title=="Edit Profile") { %> class="active" <% } %>
             >Edit Profile</a></li>         
           <li><a href="/users/logout">Logout</a></li>
        <% } %>

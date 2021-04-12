@@ -40,8 +40,8 @@ const login = (req, res) => {
   })(req, res);
 };
 
-const logout = (req, res) => {
-  req.logout();
+const logout = async (req, res) => {
+  await req.logout();
   res.redirect("/");
 };
 

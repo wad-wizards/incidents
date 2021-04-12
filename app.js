@@ -10,9 +10,6 @@ const useSession = require("./middleware/session");
 const usePassport = require("./middleware/passport");
 const setViewGlobals = require("./middleware/setViewGlobals");
 
-let userModel = require("./models/user.model");
-let User = userModel.User;
-
 module.exports = () => {
   const app = express();
 

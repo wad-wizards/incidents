@@ -1,37 +1,86 @@
 <!-- Main Content -->
+<style>
+  .incident {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+  }
+  .status {
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: #FFF;
+    margin-right: 10px;
+  }
+  .status.created {
+    background-color: #94C5CC;
+  }
+  .status.in-progress {
+    background-color: #F9DC5C;
+  }
+  .status.dispatched {
+    background-color: #7D70BA;
+  }
+  .status.closed {
+    background-color: #1F2232;
+  }
+  .list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 40px 0 10px;
+  }
+  .list-header > h2 {
+    margin: 0;
+  }
+  .hidden {
+    display: none;
+  }
+</style>
 <main>
-    <% if (user != null)  { %>
-    <a href="incidents/new">
-        <button style="width: 100%;  border-radius: 16px; font-size: 25px;"> 
-            Create Incident
-        </button>
-    </a>
+  <a href="incidents/new">
+    <button style="width: 100%;  border-radius: 16px; font-size: 25px;"> 
+      Create Incident
+    </button>
+  </a>
 
-    <h1>Incident Dashboard</h2>   
-    <table>
-        <!-- Header Row-->
-        <tr>
-            <th class="htitle">Title</th>
-            <th class="hdesc">Description</th>
-            <th>Priority</th>
-            <th></th>
-            <th></th>
-        </tr>
+  <div class="list-header">
+    <h2><%= title %></h2>
+    <a href="#" id="toggle"></a>
+  </div>
 
-        <!-- Repeatable Template Row -->
-        <% for(let count = 0; count < incidentsData.length; count++) { %>
-            <tr onclick="window.location='/incidents/<%= incidentsData[count]._id %>/view';">
-                <td  class="tabletitle"><%= incidentsData[count].title %></td>
-                <td><%= incidentsData[count].description %></td>
-                <td><%= incidentsData[count].priority %></td>
-                <td>
-                    <a class="button" href="/incidents/<%= incidentsData[count]._id %>/edit">Update</a>
-                </td>
-                <td>
-                    <a class="button" href="/incidents/<%= incidentsData[count]._id %>/delete">Delete</a>
-                </td>
-            </tr>
-        <% } %>
-    </table>
-    <% } %>
+  <% for(const { recordNumber, title, status } of incidents) { %>
+    <div class="incident" data-status="<%=slug(status)%>">
+      <span class="status <%=slug(status)%>"><%=status%></span>
+      <a href="/incidents/<%=recordNumber%>">
+        <%=title%>
+      </a>
+    </div>
+  <% } %>
 </main>
+
+<script>
+  const state = {
+    showClosedIncidents: false
+  };
+  const toggle = document.getElementById("toggle");
+
+  toggle.onclick = () => {
+    state.showClosedIncidents = !state.showClosedIncidents;
+    render(state);  
+  };
+
+  const render = () => {
+    const { showClosedIncidents } = state;
+    const verb = showClosedIncidents ? "Hide" : "Show";
+    toggle.innerHTML = `${verb} Closed Incidents`;
+
+    const closedIncidents = document.querySelectorAll("[data-status='closed']");
+    closedIncidents.forEach(elem => {
+      showClosedIncidents 
+        ? elem.classList.remove("hidden")
+        : elem.classList.add("hidden")
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", render);
+</script>

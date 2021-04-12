@@ -14,6 +14,12 @@ Cultured:     #F2F2F2
 
 body {
   background-color: #14213d;
+  color: #FFF;
+  max-width: 1000px;
+}
+
+h2 {
+  color: #FFF;
 }
 
 body > header {
@@ -60,6 +66,7 @@ body > footer {
   margin: 20px 0;
 }
 
+em,
 h1,
 h2,
 h3,
@@ -93,7 +100,7 @@ nav {
   letter-spacing: 2px;
 }
 
-ul {
+nav > ul {
   list-style-type: none;
   margin: 0;
   padding: 0;

@@ -1,0 +1,107 @@
+<style>
+  main {
+    margin-top: 25px;
+  }
+  .content {
+    display: flex;
+    margin-top: 25px;
+    border-bottom: medium solid white;
+    padding-bottom: 10px;
+  }
+  .primary-section {
+    flex: 3;
+  }
+  .side-section {
+    flex: 1;
+  }
+  h1 {
+    margin-top: 0;
+  }
+  h2 {
+    text-decoration: underline;
+  }
+  .block {
+    margin-bottom: 25px;
+  }
+  .block > .label {
+    color: #fca311;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  .cta {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .narrative {
+    border-bottom: thin solid #777;
+    padding: 15px 5px;
+  }
+  b {
+    color: #fca311
+  }
+</style>
+<main>
+  <div class="content">
+    <section class="side-section">
+      <div class="block">
+        <div class="label">Record Number</div>
+        <span><%=incident.recordNumber%></span>
+      </div>
+      <div class="block">
+        <div class="label">Created</div>
+        <span><%=timestamp(incident.createdAt)%></span>
+      </div>
+      <div class="block">
+        <div class="label">Last Updated</div>
+        <span><%=timestamp(incident.updatedAt)%></span>
+      </div>
+      <div class="block">
+        <div class="label">Status</div>
+        <span><%=incident.status%></span>
+      </div>
+      <div class="block">
+        <div class="label">Priority</div>
+        <span><%=incident.priority%></span>
+      </div>
+    </section>
+
+    <section class="primary-section">
+      <h1><%=incident.title%></h1>
+      <div class="block">
+        <div class="label">Customer</div>
+        <div><%=incident.customer%></div>
+      </div>
+      <div class="block">
+        <div class="label">Description</div>
+        <div><%=incident.description%></div>
+      </div>
+      <div class="cta">
+        <% if (incident.status !== "Closed") { %>
+          <a href="/incidents/<%=incident.recordNumber%>/edit">
+            <button>Edit Incident</button>
+          </a>
+        <% } %>
+        <a href="/incidents/<%=incident.recordNumber%>/delete">
+          <button>Delete Incident</button>
+        </a>
+      </div>
+    </section>
+  </div>
+  <div class="narratives">
+    <h2>Incident Log</h2>
+    <% for (const narrative of sortByDescCreatedAt(narratives)) { %>
+      <div class="narrative">
+        <div><em>@<%=narrative.author.username%></em> made the following changes <em><%=timestamp(narrative.createdAt)%></em></div>
+        <div class="changes">
+          <ul>
+            <% for (const key in narrative.changes) { %>
+              <li><%=capitalize(key)%>: <b><%=capitalize(narrative.changes[key].prev)%></b> -> <b><%=capitalize(narrative.changes[key].next)%></b></li>
+            <% } %>
+          </ul>
+          <blockquote><%=narrative.narrative%></blockquote>
+        </div>
+        <%  %>
+      </div>
+    <% } %>
+  </div>
+</main>

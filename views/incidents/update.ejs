@@ -6,9 +6,6 @@
             <label for="title">Title: </label>
             <input name="title" value="<%=incident.title%>" required />
 
-            <label for="customer">Customer: </label>
-            <input name="customer" value="<%=incident.customer%>" required />
-
             <label for="description">Description:</label>
             <textarea name="description" required><%=incident.description%></textarea>
 
@@ -29,6 +26,10 @@
                     selected: incident.status 
                 })
             %>
+
+            <label for="narrative">Narrative/Resolution</label>
+            <textarea name="narrative" required></textarea>
+
             <button type="submit">Update Incident</button>
         
         </fieldset>
